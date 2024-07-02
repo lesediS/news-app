@@ -1,5 +1,6 @@
 package com.loc.newsapp.presentation.common
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,23 +15,29 @@ import androidx.paging.compose.LazyPagingItems
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
+import com.loc.newsapp.presentation.home.components.ArticleCard
 
 @Composable
 fun ArticlesList(
     modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
-    onClick: (Article) -> Unit
+    onClick:(Article) -> Unit
 ) {
-    val handlePagingResult = handlePagingResult(articles = articles)
+
+    val handlePagingResult = handlePagingResult(articles)
+
+
     if (handlePagingResult) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(MediumPadding1),
             contentPadding = PaddingValues(all = ExtraSmallPadding2)
         ) {
-            items(count = articles.itemCount){
-                articles[it]?.let{
-                    ArticleCard(article = it, onClick = { onClick(it) })
+            items(
+                count = articles.itemCount,
+            ) {
+                articles[it]?.let { article ->
+                    ArticleCard(article = article, onClick = {onClick(article)})
                 }
             }
         }
@@ -38,9 +45,7 @@ fun ArticlesList(
 }
 
 @Composable
-fun handlePagingResult(
-    articles: LazyPagingItems<Article>
-): Boolean {
+fun handlePagingResult(articles: LazyPagingItems<Article>): Boolean {
     val loadState = articles.loadState
     val error = when {
         loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
@@ -56,7 +61,8 @@ fun handlePagingResult(
         }
 
         error != null -> {
-            EmptyScreen()
+            EmptyScreen(error = error)
+            Log.d("EmptyScreen", error.toString())
             false
         }
 
@@ -67,11 +73,11 @@ fun handlePagingResult(
 }
 
 @Composable
-private fun ShimmerEffect() {
-    Column(verticalArrangement = Arrangement.spacedBy(MediumPadding1)) {
-        repeat(10) {
+fun ShimmerEffect() {
+    Column(verticalArrangement = Arrangement.spacedBy(MediumPadding1)){
+        repeat(10){
             ArticleCardShimmerEffect(
-                modifier = Modifier.padding(MediumPadding1)
+                modifier = Modifier.padding(horizontal = MediumPadding1)
             )
         }
     }

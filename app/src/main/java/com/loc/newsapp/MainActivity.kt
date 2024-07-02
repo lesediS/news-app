@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
 
                 val isSystemInDarkMode = isSystemInDarkTheme()
                 val systemController = rememberSystemUiController()
+
                 SideEffect{
                     systemController.setStatusBarColor(
                         color = Color.Transparent,

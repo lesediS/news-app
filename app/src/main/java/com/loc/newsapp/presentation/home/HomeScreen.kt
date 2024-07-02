@@ -38,7 +38,8 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             if (articles.itemCount > 10) {
                 articles.itemSnapshotList
                     .slice(IntRange(start = 0, endInclusive = 9))
-                    .joinToString(separator = "\uD83d\uDFE5") { it!!.title }
+                    .mapNotNull { it?.title } // Use mapNotNull to handle null items
+                    .joinToString(separator = "\uD83d\uDFE5")
             } else {
                 ""
             }
@@ -62,6 +63,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
         Spacer(modifier = Modifier.height(MediumPadding1))
 
         SearchBar(
+            modifier = Modifier.padding(horizontal = MediumPadding1),
             text = "",
             readOnly = true,
             onValueChange = {},
