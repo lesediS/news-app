@@ -17,15 +17,35 @@ import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
 import com.loc.newsapp.presentation.home.components.ArticleCard
 
+
+@Composable
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+        contentPadding = PaddingValues(all = ExtraSmallPadding2)
+    ) {
+        items(
+            count = articles.size,
+        ) {
+            val article = articles[it]
+            ArticleCard(article = article, onClick = { onClick(article) })
+        }
+    }
+}
+
 @Composable
 fun ArticlesList(
     modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
-    onClick:(Article) -> Unit
+    onClick: (Article) -> Unit
 ) {
 
     val handlePagingResult = handlePagingResult(articles)
-
 
     if (handlePagingResult) {
         LazyColumn(
@@ -36,8 +56,8 @@ fun ArticlesList(
             items(
                 count = articles.itemCount,
             ) {
-                articles[it]?.let { article ->
-                    ArticleCard(article = article, onClick = {onClick(article)})
+                articles[it]?.let {
+                    ArticleCard(article = it, onClick = { onClick(it) })
                 }
             }
         }
@@ -74,8 +94,8 @@ fun handlePagingResult(articles: LazyPagingItems<Article>): Boolean {
 
 @Composable
 fun ShimmerEffect() {
-    Column(verticalArrangement = Arrangement.spacedBy(MediumPadding1)){
-        repeat(10){
+    Column(verticalArrangement = Arrangement.spacedBy(MediumPadding1)) {
+        repeat(10) {
             ArticleCardShimmerEffect(
                 modifier = Modifier.padding(horizontal = MediumPadding1)
             )
