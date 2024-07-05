@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.loc.newsapp.presentation.common.EmptyScreen
 import com.loc.newsapp.presentation.nvgraph.NavGraph
 import com.loc.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
                 Box(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
                     val startDestination = viewModel.startDestination
                     NavGraph(startDestination = startDestination)
+//                    EmptyScreen()
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.loc.newsapp.presentation.details.components
 
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -82,7 +81,7 @@ private fun DetailsTopBarPreview() {
             DetailsTopBar(
                 onBrowsingClick = { /*TODO*/ },
                 onShareClick = { /*TODO*/ },
-                onBookmarkClick = { /*TODO*/ }) {
+                onBookmarkClick = {  }) {
 
             }
         }
