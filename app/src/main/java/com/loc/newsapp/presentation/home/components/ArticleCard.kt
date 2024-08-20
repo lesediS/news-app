@@ -64,7 +64,7 @@ fun ArticleCard(
             verticalArrangement = Arrangement.SpaceAround
         ) {
             Text(
-                text = article.title,
+                text = article.title ?: "No title available",
                 style = MaterialTheme.typography.bodyMedium,
                 color = colorResource(id = R.color.text_title),
                 maxLines = 2,
