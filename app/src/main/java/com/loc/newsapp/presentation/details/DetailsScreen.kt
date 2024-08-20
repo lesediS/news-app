@@ -88,7 +88,7 @@ fun DetailsScreen(
                 Spacer(modifier = Modifier.height(MediumPadding1))
 
                 Text(
-                    text = article.title,
+                    text = article.title ?: "No title available",
                     style = MaterialTheme.typography.displaySmall,
                     color = colorResource(id = R.color.text_title)
                 )
