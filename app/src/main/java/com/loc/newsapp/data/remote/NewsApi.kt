@@ -1,24 +1,26 @@
 package com.loc.newsapp.data.remote
 
-import com.loc.newsapp.data.remote.dto.NewsResponse
+import com.loc.newsapp.domain.model.TheNewsApi
 import com.loc.newsapp.util.Constants.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NewsApi {
 
-    @GET("everything")
+    @GET("top")
     suspend fun getNews(
-        @Query("page") page: Int,
-        @Query("sources") sources: String,
-        @Query("apiKey") apiKey: String = API_KEY
-    ): NewsResponse
+        @Query("api_token") apiToken: String = API_KEY,
+        @Query("locale") locale: String = "za",
+        @Query("limit") limit: Int = 3,
+        @Query("page") page: Int
+    ): TheNewsApi // Update this to use TheNewsApi instead of NewsResponse
 
-    @GET("everything")
+    @GET("top")
     suspend fun searchNews(
         @Query("q") searchQuery: String,
-        @Query("page") page: Int,
-        @Query("sources") sources: String,
-        @Query("apiKey") apiKey: String = API_KEY
-    ): NewsResponse
+        @Query("api_token") apiToken: String = API_KEY,
+        @Query("locale") locale: String = "za",
+        @Query("limit") limit: Int = 3,
+        @Query("page") page: Int
+    ): TheNewsApi // Update this to use TheNewsApi instead of NewsResponse
 }

@@ -75,7 +75,7 @@ fun ArticleCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = article.source.name,
+                    text = article.source,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(id = R.color.text_title)
                 )
@@ -114,7 +114,7 @@ fun ArticleCardPreview() {
                 content = "",
                 description = "",
                 publishedAt = "2 hours",
-                source = Source(id = "", name = "MEGATRON"),
+                source = "MEGATRON",
                 title = "You should know how to make web requests in your chosen programming language. We have included some crude ways to do this in our examples below if you need a place to start.",
                 url = "",
                 urlToImage = ""

@@ -114,9 +114,7 @@ private fun DetailsScreenPreview() {
             description = "Coinbase says Apple blocked its last app release on NFTs in Wallet ... - CryptoSaurus",
             content = "We use cookies and data to Deliver and maintain Google services Track outages and protect against spam, fraud, and abuse Measure audience engagement and site statistics to unde… [+1131 chars]",
             publishedAt = "2024-07-01T05:00:00Z",
-            source = Source(
-                id = "", name = "Google News"
-            ),
+            source = "Google News",
             url = "https://news.google.com/rss/articles/CBMidmh0dHBzOi8vd3d3LnRoZWd1YXJkaWFuLmNvbS9zY2llbmNlL2FydGljbGUvMjAyNC9qdWwvMDEvc3RhcndhdGNoLWEtMjYwMC15ZWFyLXdhaXQtdG8tc2VlLXQtY29yb25hZS1ib3JlYWxpcy1leHBsb3Npb27SAXZodHRwczovL2FtcC50aGVndWFyZGlhbi5jb20vc2NpZW5jZS9hcnRpY2xlLzIwMjQvanVsLzAxL3N0YXJ3YXRjaC1hLTI2MDAteWVhci13YWl0LXRvLXNlZS10LWNvcm9uYWUtYm9yZWFsaXMtZXhwbG9zaW9u?oc=5",
             urlToImage = "https://media.wired.com/photos/6495d5e893ba5cd8bbdc95af/191:100/w_1280,c_limit/The-EU-Rules-Phone-Batteries-Must-Be-Replaceable-Gear-2BE6PRN.jpg"
         ),

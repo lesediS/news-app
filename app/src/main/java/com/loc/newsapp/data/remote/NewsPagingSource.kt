@@ -16,20 +16,52 @@ class NewsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val page = params.key ?: 1
         return try {
-            val newsResponse = newsApi.getNews(sources = sources, page = page)
-            totalNewsCount += newsResponse.articles.size
-            val articles = newsResponse.articles.distinctBy { it.title } //remove duplicate news articles by their title
+            // Fetch news from the API
+            val newsResponse = newsApi.getNews(page = page)
+
+            // Extract articles from the 'data' field of the response
+            val articles = newsResponse.data.map { data ->
+                Article(
+                    author = null, // Adjust if you have author information in your data model
+                    content = "", // Adjust if necessary
+                    description = data.description,
+                    publishedAt = data.published_at,
+                    source = data.source,
+                    title = data.title,
+                    url = data.url,
+                    urlToImage = data.image_url
+                )
+            }
+
             LoadResult.Page(
                 data = articles,
-                nextKey = if (totalNewsCount == newsResponse.totalResults) null else page + 1,
-                prevKey = null
+                nextKey = if (newsResponse.meta.found > (page * newsResponse.meta.limit)) page + 1 else null,
+                prevKey = if (page == 1) null else page - 1
+            )
+
+            LoadResult.Page(
+                data = articles,
+                nextKey = if (newsResponse.meta.found > (page * newsResponse.meta.limit)) page + 1 else null,
+                prevKey = if (page == 1) null else page - 1 // Allow for previous page navigation
             )
         } catch (e: Exception) {
-            e.printStackTrace()
-            LoadResult.Error(
-                throwable = e
-            )
+            Log.e("NewsPagingSource", "Error loading news: ${e.message}", e)
+            LoadResult.Error(e)
         }
+        /*totalNewsCount += articles.size
+
+        // Remove duplicate articles by their title
+        val distinctArticles = articles.distinctBy { it.title }
+
+        LoadResult.Page(
+            data = distinctArticles,
+            nextKey = if (totalNewsCount >= newsResponse.meta.found) null else page + 1,
+            prevKey = if (page == 1) null else page - 1 // Allow for previous page navigation
+        )
+    } catch (e: Exception) {
+        Log.e("NewsPagingSource", "Error loading news: ${e.message}", e)
+        LoadResult.Error(e)
+    }*/
     }
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
