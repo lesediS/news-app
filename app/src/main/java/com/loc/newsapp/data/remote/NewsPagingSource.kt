@@ -25,6 +25,7 @@ class NewsPagingSource(
                     author = null, // Adjust if you have author information in your data model
                     content = "", // Adjust if necessary
                     description = data.description,
+                    snippet = data.snippet,
                     publishedAt = data.published_at,
                     source = data.source,
                     title = data.title,

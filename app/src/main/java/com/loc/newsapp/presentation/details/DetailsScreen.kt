@@ -94,7 +94,7 @@ fun DetailsScreen(
                 )
 
                 Text(
-                    text = article.content,
+                    text = article.snippet,
                     style = MaterialTheme.typography.bodyMedium,
                     color = colorResource(id = R.color.body)
                 )
@@ -112,6 +112,7 @@ private fun DetailsScreenPreview() {
             author = "The Guardian",
             title = "Starwatch: a 2,600-year wait to see T Coronae Borealis explosion - The Guardian",
             description = "Coinbase says Apple blocked its last app release on NFTs in Wallet ... - CryptoSaurus",
+            snippet = "This is a snippet of the article content.",
             content = "We use cookies and data to Deliver and maintain Google services Track outages and protect against spam, fraud, and abuse Measure audience engagement and site statistics to unde… [+1131 chars]",
             publishedAt = "2024-07-01T05:00:00Z",
             source = "Google News",

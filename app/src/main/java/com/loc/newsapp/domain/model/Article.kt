@@ -11,6 +11,7 @@ data class Article(
     val author: String?,
     val content: String,
     val description: String,
+    val snippet: String,
     val publishedAt: String,
     val source: String,
     val title: String,

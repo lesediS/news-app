@@ -2,14 +2,7 @@ package com.loc.newsapp.presentation.home.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,7 +21,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.loc.newsapp.R
 import com.loc.newsapp.domain.model.Article
-import com.loc.newsapp.domain.model.Source
 import com.loc.newsapp.presentation.Dimens.ArticleCardSize
 import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding
 import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding2
@@ -42,6 +34,7 @@ fun ArticleCard(
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
+
     Row(
         modifier = modifier.clickable { onClick() }
     ) {
@@ -49,8 +42,7 @@ fun ArticleCard(
             modifier = Modifier
                 .size(ArticleCardSize)
                 .clip(MaterialTheme.shapes.medium),
-            model = ImageRequest
-                .Builder(context)
+            model = ImageRequest.Builder(context)
                 .data(article.urlToImage)
                 .build(),
             contentDescription = null,
@@ -61,21 +53,32 @@ fun ArticleCard(
             modifier = Modifier
                 .padding(horizontal = ExtraSmallPadding)
                 .height(ArticleCardSize),
-            verticalArrangement = Arrangement.SpaceAround
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = article.title ?: "No title available",
+                text = article.title.takeIf { it.isNotBlank() } ?: "No title available",
                 style = MaterialTheme.typography.bodyMedium,
                 color = colorResource(id = R.color.text_title),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
 
+            Text(
+                text = article.description.takeIf { it.isNotBlank() } ?: "No description available",
+                style = MaterialTheme.typography.bodySmall,
+                color = colorResource(id = R.color.body),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(vertical = ExtraSmallPadding)
+            )
+
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = ExtraSmallPadding)
             ) {
                 Text(
-                    text = article.source,
+                    text = article.source.takeIf { it.isNotBlank() } ?: "Unknown Source",
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(id = R.color.text_title)
                 )
@@ -83,9 +86,7 @@ fun ArticleCard(
                 Spacer(modifier = Modifier.width(ExtraSmallPadding2))
 
                 Icon(
-                    painter = painterResource(
-                        id = R.drawable.ic_time
-                    ),
+                    painter = painterResource(id = R.drawable.ic_time),
                     contentDescription = null,
                     modifier = Modifier.size(SmallIconSize),
                     tint = colorResource(id = R.color.body)
@@ -94,7 +95,7 @@ fun ArticleCard(
                 Spacer(modifier = Modifier.width(ExtraSmallPadding2))
 
                 Text(
-                    text = article.publishedAt,
+                    text = article.publishedAt.takeIf { it.isNotBlank() } ?: "Unknown Time",
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(id = R.color.text_title)
                 )
@@ -110,16 +111,16 @@ fun ArticleCardPreview() {
     NewsAppTheme {
         ArticleCard(
             article = Article(
-                author = "",
+                author = null,
                 content = "",
-                description = "",
-                publishedAt = "2 hours",
+                description = "This is a sample description for the article, providing more details.",
+                snippet = "This is a sample snippet for the article, providing a brief overview.",
+                publishedAt = "2 hours ago",
                 source = "MEGATRON",
                 title = "You should know how to make web requests in your chosen programming language. We have included some crude ways to do this in our examples below if you need a place to start.",
                 url = "",
                 urlToImage = ""
             )
-        ) {
-        }
+        ) {}
     }
 }
